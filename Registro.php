@@ -1,21 +1,24 @@
 <?php
 
-$conexion = new mysqli("proyecto", "Usuario", "Contraseña", "usuario");
+    include "conexion.php";
 
-if ($conexion->connect_error){
-    die("Error al conectar la base datos: ".$conexion->connect_error);
-}
+    $nombre = $_POST["nombre"];
+    $apellido = $_POST["apellido"];
+    $idNumero = $_POST["idNumero"];
+    $celular = $_POST["celular"];
+    $usuario = $_POST["usuario"];
+    $contraseña = $_POST["contraseña"];
+    $email = $_POST["email"];
+    $rol = $_POST["rol"];
 
-$usuario = $_POST["usuario"];
-$contraseña = password_hash($_POST["contraseña"], PASSWORD_DEFAULT);
+    $query = "INSERT INTO usuario(nombre, apellido, idNumero, celular, usuario, contraseña, email, rol)
+              VALUES($nombre, $apellido, $idNumero, $celular, $usuario, $contraseña, $email, $rol )";
 
-$sql = "INSERT INTO usuarios (usuario, contraseña) VALUES ($usuario, $contraseña)";
+    $ejecutar = mysql_query($conexion);
 
-if ($conexion->query($sql) === TRUE) {
-    echo "Usuario registrado exitosamente";
-} else {
-    echo "Error al registrar al usuario: " .$conexion->error;
-}
-
-$conexion->close();
-
+    if($ejecutar){
+        echo "Usuario guardado correctamente";
+    }else{
+        echo"!ERROR¡ Usuario guardado incorrectamente";
+    }
+?>
